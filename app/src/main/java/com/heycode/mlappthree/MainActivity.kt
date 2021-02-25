@@ -1,56 +1,50 @@
 package com.heycode.mlappthree
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.nex3z.fingerpaintview.FingerPaintView
 import org.tensorflow.lite.Interpreter
-import java.io.FileInputStream
 import java.io.IOException
-import java.nio.ByteBuffer
-import java.nio.channels.FileChannel
+
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var draw_area: FingerPaintView
+    private lateinit var drawArea: FingerPaintView
+    private lateinit var probability:TextView
+    private lateinit var timeTaken:TextView
+    private lateinit var predictedResult:TextView
 
-    private lateinit var interpreter: Interpreter
+    private lateinit var classifier: Classifier
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        draw_area = findViewById(R.id.draw_area)
+        drawArea = findViewById(R.id.draw_area)
+        probability = findViewById(R.id.result_probability)
+        predictedResult = findViewById(R.id.result_text_view)
+        timeTaken = findViewById(R.id.time_taken)
 
         try {
-            interpreter = Interpreter(loadModelFile(), null)
-
-        } catch (e: Exception) {
-            println(e.stackTrace)
+            classifier = Classifier(this)
+        } catch (e: IOException) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
 
         findViewById<Button>(R.id.clear_value_button).setOnClickListener {
-            draw_area.clear()
+            drawArea.clear()
         }
         findViewById<Button>(R.id.predict_button).setOnClickListener {
-
+            val bitmap: Bitmap =
+                drawArea.exportToBitmap(Classifier.IMG_WIDTH, Classifier.IMG_HEIGHT)
+            val res: Result = classifier.classify(bitmap)
+            probability.text = "Accuracy: " + res.probability
+            timeTaken.text = "TimeCost: " + res.timeCost
+            predictedResult.text = res.number.toString()
         }
     }
-
-    private fun doInference(`val`: String): Float {
-        val input = FloatArray(1)
-        input[0] = `val`.toFloat()
-        val output = Array(1) { FloatArray(1) }
-        interpreter.run(input, output)
-        return output[0][0]
-    }
-
-    @Throws(IOException::class)
-    private fun loadModelFile(): ByteBuffer {
-        val assetFileDescriptor = this.assets.openFd("digit.tflite")
-        val fileInputStream = FileInputStream(assetFileDescriptor.fileDescriptor)
-        val fileChannel: FileChannel = fileInputStream.channel
-        val startOffset = assetFileDescriptor.startOffset
-        val length = assetFileDescriptor.length
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, length)
-    }
+}
 }
