@@ -7,15 +7,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.nex3z.fingerpaintview.FingerPaintView
-import org.tensorflow.lite.Interpreter
 import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawArea: FingerPaintView
-    private lateinit var probability:TextView
-    private lateinit var timeTaken:TextView
-    private lateinit var predictedResult:TextView
+    private lateinit var probability: TextView
+    private lateinit var timeTaken: TextView
+    private lateinit var predictedResult: TextView
 
     private lateinit var classifier: Classifier
 
@@ -46,5 +45,4 @@ class MainActivity : AppCompatActivity() {
             predictedResult.text = res.number.toString()
         }
     }
-}
 }

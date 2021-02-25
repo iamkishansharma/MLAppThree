@@ -1,7 +1,6 @@
 package com.heycode.mlappthree;
 
 public class Result {
-
     private final int mNumber;
     private final float mProbability;
     private final long mTimeCost;
