@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.nex3z.fingerpaintview.FingerPaintView
 import java.io.IOException
 
@@ -35,12 +36,24 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.clear_value_button).setOnClickListener {
             drawArea.clear()
+            probability.text = null
+            timeTaken.text = null
+            predictedResult.text = null
         }
         findViewById<Button>(R.id.predict_button).setOnClickListener {
+            if (drawArea.isEmpty) {
+                Snackbar.make(
+                    findViewById(R.id.main_layout),
+                    "Draw a digit first!",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
             val bitmap: Bitmap =
                 drawArea.exportToBitmap(Classifier.IMG_WIDTH, Classifier.IMG_HEIGHT)
             val res: Result = classifier.classify(bitmap)
-            probability.text = "Accuracy: " + res.probability
+            probability.text = "Accuracy: " + res.probability * 100 + "%"
             timeTaken.text = "TimeCost: " + res.timeCost
             predictedResult.text = res.number.toString()
         }
