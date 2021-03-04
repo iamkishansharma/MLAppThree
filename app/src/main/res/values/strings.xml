@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MLAppThree</string>
+    <string name="draw_a_single_digit">Draw a Single Digit</string>
+    <string name="result">Result:</string>
+    <string name="time">Time:</string>
+    <string name="accuracy">Accuracy:</string>
+    <string name="predict_the_digit">Predict the Digit</string>
+    <string name="clear">Clear</string>
 </resources>

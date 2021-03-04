@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/main_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_shadow_start_color"
     tools:context=".MainActivity">
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Accuracy: "
+            android:text="@string/accuracy"
             android:textStyle="bold" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/result_probability"
             android:layout_centerHorizontal="true"
-            android:text="Time: "
+            android:text="@string/time"
             android:textStyle="bold" />
 
         <com.google.android.material.card.MaterialCardView
@@ -46,7 +46,7 @@
                 android:background="@drawable/bg"
                 android:gravity="center"
                 android:padding="40dp"
-                android:text="Result: "
+                android:text="@string/result"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 android:textStyle="bold" />
@@ -68,7 +68,7 @@
                 android:background="@color/purple_200"
                 android:gravity="center_horizontal"
                 android:padding="1dp"
-                android:text="Draw Single Digit"
+                android:text="@string/draw_a_single_digit"
                 android:textColor="@color/black" />
 
             <com.nex3z.fingerpaintview.FingerPaintView
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:text="Clear"
+                android:text="@string/clear"
                 app:backgroundTint="@color/red" />
 
             <Button
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_weight="1"
-                android:text="Predict the Digit"
+                android:text="@string/predict_the_digit"
                 app:backgroundTint="@color/green" />
         </LinearLayout>
     </RelativeLayout>
